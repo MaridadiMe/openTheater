@@ -14,6 +14,9 @@ class Actor(models.Model):
     )
     date_created = models.DateTimeField('date created')
 
+    def __str__(self):
+        return f'Actor(${self.first_name}, ${self.second_name})'
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100)
@@ -21,6 +24,9 @@ class Category(models.Model):
         'auth.User',
         on_delete = models.CASCADE
     )
+
+    def __str__(self):
+        return self.name
 
 class Movie(models.Model):
     title = models.CharField(max_length=50)
@@ -36,6 +42,9 @@ class Movie(models.Model):
     actors = models.ManyToManyField(Actor, through='Movie_actor')
     categories = models.ManyToManyField(Category, through='Movie_category')
     downloads = models.ManyToManyField(User, through='Downloads', related_name='+')
+
+    def __str__(self):
+        return f'Movie(${self.title}, ${self.release_year})' 
 
 class Movie_actor(models.Model):
     movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
