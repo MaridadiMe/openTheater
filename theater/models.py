@@ -67,6 +67,9 @@ class Language(models.Model):
         on_delete = models.CASCADE
     )
     date_created = models.DateTimeField('date created')
+
+    def __str__(self):
+        return self.name
     
 
 class Downloads(models.Model):
