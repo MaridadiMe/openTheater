@@ -5,8 +5,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from . serializers import CategorySerializer
-from . models import Category
+from . serializers import CategorySerializer, LanguageSerializer
+from . models import Category, Language
 
 # Create your views here.
 
@@ -23,3 +23,9 @@ class  CategoryList(APIView):
         serializer = CategorySerializer(categories, many=True)
         return JsonResponse(serializer.data, safe=False)
         
+
+class LanguageList(APIView):
+    def get(self, request):
+        languages = Language.objects.all()
+        serializer = LanguageSerializer(languages, many=True)
+        return JsonResponse(serializer.data, safe=False)
