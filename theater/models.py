@@ -14,6 +14,7 @@ class Actor(models.Model):
         on_delete = models.CASCADE
     )
     date_created = models.DateTimeField('date created')
+    uuid = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
 
     def __str__(self):
         return f'Actor(${self.first_name}, ${self.second_name})'
@@ -25,7 +26,7 @@ class Category(models.Model):
         'auth.User',
         on_delete = models.CASCADE
     )
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
 
     def __str__(self):
         return self.name
@@ -41,6 +42,7 @@ class Movie(models.Model):
     )
     size = models.CharField(max_length=7)
     date_created = models.DateTimeField('date created')
+    uuid = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
     actors = models.ManyToManyField(Actor, through='Movie_actor')
     categories = models.ManyToManyField(Category, through='Movie_category')
     downloads = models.ManyToManyField(User, through='Downloads', related_name='+')
@@ -53,6 +55,7 @@ class Movie_actor(models.Model):
     actor = models.ForeignKey('Actor', on_delete=models.CASCADE)
     actor_character = models.CharField(max_length=50)
     date_created = models.DateTimeField('date created')
+    uuid = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
 
 
 
@@ -60,6 +63,7 @@ class Movie_category(models.Model):
     movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     date_created = models.DateTimeField('date created')
+    uuid = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
 
 
 class Language(models.Model):
@@ -69,6 +73,7 @@ class Language(models.Model):
         on_delete = models.CASCADE
     )
     date_created = models.DateTimeField('date created')
+    uuid = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
 
     def __str__(self):
         return self.name
@@ -78,3 +83,4 @@ class Downloads(models.Model):
     movie = models.ForeignKey('Movie', on_delete=models.CASCADE, related_name='+')
     downloader = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     date_created = models.DateTimeField('date created')
+    uuid = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
