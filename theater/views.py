@@ -20,7 +20,7 @@ class  CategoryList(APIView):
     
     def get(self, request):
         categories = Category.objects.all()
-        serializer = CategorySerializer(categories, many=True)
+        serializer = CategorySerializer(categories, many=True)        
         return JsonResponse(serializer.data, safe=False)
         
 
@@ -29,3 +29,7 @@ class LanguageList(APIView):
         languages = Language.objects.all()
         serializer = LanguageSerializer(languages, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+
+
+

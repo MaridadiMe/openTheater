@@ -34,7 +34,7 @@ class Category(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=50)
     release_year = models.DateTimeField('date released')
-    language = models.IntegerField()
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
     description = models.CharField(max_length=200)
     creator = models.ForeignKey(
         'auth.User',
@@ -46,9 +46,10 @@ class Movie(models.Model):
     actors = models.ManyToManyField(Actor, through='Movie_actor')
     categories = models.ManyToManyField(Category, through='Movie_category')
     downloads = models.ManyToManyField(User, through='Downloads', related_name='+')
+    upload = models.FileField(upload_to='openTHeater/%Y/%m/%d')
 
     def __str__(self):
-        return f'Movie(${self.title}, ${self.release_year})' 
+        return f'{self.title}, ({self.release_year})' 
 
 class Movie_actor(models.Model):
     movie = models.ForeignKey('Movie', on_delete=models.CASCADE)

@@ -7,11 +7,11 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model =  Category
-        fields = "__all__"
-        # fields = ('id','name', 'description', 'creator')
+        # fields = "__all__"
+        fields = ('name', 'description', 'uuid')
 
 
 class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Language
-        fields = ('id','name')
+        fields = ('uuid','name')
