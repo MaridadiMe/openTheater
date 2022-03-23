@@ -46,7 +46,8 @@ class Movie(models.Model):
     actors = models.ManyToManyField(Actor, through='Movie_actor')
     categories = models.ManyToManyField(Category, through='Movie_category')
     downloads = models.ManyToManyField(User, through='Downloads', related_name='+')
-    upload = models.FileField(upload_to='openTHeater/%Y/%m/%d'+str(title))
+    upload = models.FileField(upload_to='openTHeater/%Y/%m/%d')
+    cover = models.FileField(upload_to='openTHeater/%Y/%m/%d')
 
     def __str__(self):
         return f'{self.title}, ({self.release_year})' 
