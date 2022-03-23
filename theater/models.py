@@ -17,7 +17,7 @@ class Actor(models.Model):
     uuid = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
 
     def __str__(self):
-        return f'Actor(${self.first_name}, ${self.second_name})'
+        return f'{self.first_name}, {self.second_name}'
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
@@ -46,7 +46,7 @@ class Movie(models.Model):
     actors = models.ManyToManyField(Actor, through='Movie_actor')
     categories = models.ManyToManyField(Category, through='Movie_category')
     downloads = models.ManyToManyField(User, through='Downloads', related_name='+')
-    upload = models.FileField(upload_to='openTHeater/%Y/%m/%d')
+    upload = models.FileField(upload_to='openTHeater/%Y/%m/%d'+str(title))
 
     def __str__(self):
         return f'{self.title}, ({self.release_year})' 
@@ -57,6 +57,9 @@ class Movie_actor(models.Model):
     actor_character = models.CharField(max_length=50)
     date_created = models.DateTimeField('date created')
     uuid = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
+
+    def __str__(self):
+        return self.actor_character
 
 
 

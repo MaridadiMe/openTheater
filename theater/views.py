@@ -5,8 +5,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from . serializers import CategorySerializer, LanguageSerializer
-from . models import Category, Language
+from . serializers import CategorySerializer, LanguageSerializer, MovieSerializer
+from . models import Category, Language, Movie
 
 # Create your views here.
 
@@ -30,6 +30,10 @@ class LanguageList(APIView):
         serializer = LanguageSerializer(languages, many=True)
         return JsonResponse(serializer.data, safe=False)
 
-
+class MovieList(APIView):
+    def get(self, request):
+        movies = Movie.objects.all()
+        serializer = MovieSerializer(movies, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
 
