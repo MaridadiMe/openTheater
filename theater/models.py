@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.contrib.auth.models import User
+import os
 
 # Create your models here.
 
@@ -31,11 +32,14 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+def movie_upload_path(instance, filename):
+    return os.path.join(instance.title, filename)
+
 class Movie(models.Model):
     title = models.CharField(max_length=50)
     release_year = models.DateTimeField('date released')
     language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=300)
     creator = models.ForeignKey(
         'auth.User',
         on_delete =  models.CASCADE
@@ -46,8 +50,10 @@ class Movie(models.Model):
     actors = models.ManyToManyField(Actor, through='Movie_actor')
     categories = models.ManyToManyField(Category, through='Movie_category')
     downloads = models.ManyToManyField(User, through='Downloads', related_name='+')
-    upload = models.FileField(upload_to='openTHeater/%Y/%m/%d')
-    cover = models.FileField(upload_to='openTHeater/%Y/%m/%d')
+    upload = models.FileField(upload_to=movie_upload_path)
+    cover = models.FileField(upload_to=movie_upload_path)
+
+    
 
     def __str__(self):
         return f'{self.title}, ({self.release_year})' 

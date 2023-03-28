@@ -4,7 +4,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('categories/', views.CategoryList.as_view()),
-    path('languages/', views.LanguageList.as_view()),
-    path('get-theater-list/', views.MovieList.as_view()),
+    path('openTheater/categories/', views.CategoryList.as_view()),
+    path('openTheater/languages/', views.LanguageList.as_view()),
+    path('openTheater/get-movie-list-to-watch/', views.MovieWatchList.as_view()),
+    path('openTheater/get-movie-to-watch-details/<str:uuid>', views.MovieDetails.as_view()),
 ]

@@ -26,8 +26,14 @@ class ActorSerializer(serializers.ModelSerializer):
         model = Actor
         fields = ('first_name', 'second_name')
 
-class MovieListSerializer(serializers.ModelSerializer):
+class MovieWatchListSerializer(serializers.ModelSerializer):
     actors = ActorSerializer(many=True, read_only=True)
     class Meta:
         model = Movie
-        fields = ('title', 'description','release_year','upload', 'actors','size', 'cover', 'uuid')
+        fields = ('title', 'release_year','actors','cover', 'uuid')
+
+class MovieDetailsSerializer(serializers.ModelSerializer):
+    actors = ActorSerializer(many=True, read_only=True)
+    class Meta:
+        model = Movie
+        fields = ('title', 'description','release_year','actors','cover', 'upload', 'uuid')

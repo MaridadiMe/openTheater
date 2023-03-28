@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from . serializers import CategorySerializer, LanguageSerializer, MovieListSerializer
+from . serializers import CategorySerializer, LanguageSerializer, MovieWatchListSerializer, MovieDetailsSerializer
 from . models import Category, Language, Movie
 
 # Create your views here.
@@ -30,10 +30,19 @@ class LanguageList(APIView):
         serializer = LanguageSerializer(languages, many=True)
         return JsonResponse(serializer.data, safe=False)
 
-class MovieList(APIView):
+class MovieWatchList(APIView):
     def get(self, request):
         movies = Movie.objects.all()
-        serializer = MovieListSerializer(movies, many=True)
+        serializer = MovieWatchListSerializer(movies, many=True)
         return JsonResponse(serializer.data, safe=False)
 
+
+class MovieDetails(APIView):
+    def get(self, request, uuid):
+        try:
+            movie = Movie.objects.get(uuid=uuid)
+        except Movie.DoesNotExist:
+            return JsonResponse({"detail": "No title found for the given uuid"}, safe=False)
+        serializer = MovieDetailsSerializer(movie, many=False)
+        return JsonResponse(serializer.data, safe=False)
 
